@@ -22,7 +22,6 @@ apply plugin: 'com.jfrog.bintray'
 apply from: 'http://lemonadelabinc.github.io/gradle-snippets/android.gradle'
 apply from: 'http://lemonadelabinc.github.io/gradle-snippets/maven.gradle'
 apply from: 'http://lemonadelabinc.github.io/gradle-snippets/eclipse.gradle'
-apply from: 'http://lemonadelabinc.github.io/gradle-snippets/testng.gradle'
 
 // Android setup
 android {
