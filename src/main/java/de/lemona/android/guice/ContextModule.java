@@ -27,8 +27,8 @@ public class ContextModule implements Module {
     @Override
     public void configure(Binder binder) {
         // Basic context and application context
-        binder.bind(Context.class).annotatedWith(AppContext.class).toProvider(ApplicationContextProvider.class);
         binder.bind(Context.class).toInstance(context);
+        binder.bind(Context.class).annotatedWith(AppContext.class).toProvider(ApplicationContextProvider.class);
 
         // Context-derived instances
         binder.bind(ApplicationInfo.class).toProvider(ApplicationInfoProvider.class);

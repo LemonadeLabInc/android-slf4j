@@ -15,6 +15,7 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 
 import de.lemona.android.guice.activity.ActionBarProvider;
+import de.lemona.android.guice.activity.ActivityApplicationProvider;
 import de.lemona.android.guice.activity.ComponentNameProvider;
 import de.lemona.android.guice.activity.FragmentManagerProvider;
 import de.lemona.android.guice.activity.LoaderManagerProvider;
@@ -28,6 +29,7 @@ public class ActivityModule implements Module {
     private final Activity activity;
 
     public ActivityModule(Activity activity) {
+        if (activity == null) throw new NullPointerException("Null activity");
         this.activity = activity;
     }
 
@@ -35,9 +37,9 @@ public class ActivityModule implements Module {
     public void configure(Binder binder) {
         // Activity and Application
         binder.bind(Activity.class).toInstance(activity);
-        binder.bind(Application.class).toInstance(activity.getApplication());
 
         // Providers for activity-related components
+        binder.bind(Application.class).toProvider(ActivityApplicationProvider.class);
         binder.bind(ActionBar.class).toProvider(ActionBarProvider.class);
         binder.bind(ComponentName.class).toProvider(ComponentNameProvider.class);
         binder.bind(FragmentManager.class).toProvider(FragmentManagerProvider.class);
