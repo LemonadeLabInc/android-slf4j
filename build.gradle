@@ -62,10 +62,10 @@ if ((_bintrayUser != null) && (_bintrayKey != null)) {
     publish = true
     pkg {
       repo = 'maven'
-      name = 'android-slf4j'
+      name = 'android-guice'
       userOrg = 'lemonade'
       licenses = ['Apache-2.0']
-      vcsUrl = 'https://github.com/LemonadeLabInc/android-slf4j/'
+      vcsUrl = 'https://github.com/LemonadeLabInc/android-guice/'
       version { name = _version }
     }
   }
