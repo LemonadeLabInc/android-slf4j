@@ -5,14 +5,14 @@ import com.google.inject.TypeLiteral;
 
 public interface Injector {
 
-    com.google.inject.Injector getInjector();
+    public com.google.inject.Injector getInjector();
 
-    <T> T getInstance(Key<T> key);
+    public <T> T getInstance(Key<T> key);
 
-    <T> T getInstance(TypeLiteral<T> type);
+    public <T> T getInstance(TypeLiteral<T> type);
 
-    <T> T getInstance(Class<T> type);
+    public <T> T getInstance(Class<T> type);
 
-    <T> T injectMembers(T object);
+    public <T> T injectMembers(T object);
 
 }

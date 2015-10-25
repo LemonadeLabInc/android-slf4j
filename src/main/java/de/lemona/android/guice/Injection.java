@@ -1,18 +1,16 @@
 package de.lemona.android.guice;
 
-import android.app.Activity;
-import android.app.Service;
-import android.content.Context;
-
-import com.google.inject.Guice;
-import com.google.inject.Key;
-import com.google.inject.Module;
-import com.google.inject.TypeLiteral;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import com.google.inject.Guice;
+import com.google.inject.Module;
+
+import android.app.Activity;
+import android.app.Service;
+import android.content.Context;
 
 public final class Injection {
 
@@ -61,42 +59,4 @@ public final class Injection {
     public static Injector createInjector(Context context, Iterable<? extends Module> modules) {
         return new InjectorWrapper(createGuiceInjector(context, modules));
     }
-
-    /* ========================================================================================== */
-
-    private static class InjectorWrapper implements de.lemona.android.guice.Injector {
-
-        private final com.google.inject.Injector injector;
-
-        private InjectorWrapper(com.google.inject.Injector injector) {
-            this.injector = injector;
-        }
-
-        @Override
-        public com.google.inject.Injector getInjector() {
-            return injector;
-        }
-
-        @Override
-        public <T> T getInstance(Key<T> key) {
-            return injector.getInstance(key);
-        }
-
-        @Override
-        public <T> T getInstance(TypeLiteral<T> type) {
-            return injector.getInstance(Key.get(type));
-        }
-
-        @Override
-        public <T> T getInstance(Class<T> type) {
-            return injector.getInstance(type);
-        }
-
-        @Override
-        public <T> T injectMembers(T object) {
-            injector.injectMembers(object);
-            return object;
-        }
-    }
-
 }
