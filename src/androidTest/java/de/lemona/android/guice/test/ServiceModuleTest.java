@@ -11,6 +11,7 @@ import com.google.inject.Injector;
 
 import junit.framework.Assert;
 
+import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.ServiceModule;
 
 public class ServiceModuleTest extends ServiceTestCase<TestService> {
@@ -31,31 +32,38 @@ public class ServiceModuleTest extends ServiceTestCase<TestService> {
     }
 
     public void testNotNullInjection() {
-        final Service Service = getService();
-        Assert.assertNotNull("Null Service in test", Service);
+        final Service service = getService();
+        Assert.assertNotNull("Null service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(Service));
+        final Injector injector = Guice.createInjector(new ServiceModule(service));
 
-        Assert.assertNotNull("Null Service instance",          injector.getInstance(Service.class));
-        Assert.assertNotNull("Null Application instance",       injector.getInstance(Application.class));
+        Assert.assertNotNull("Null service instance",     injector.getInstance(Service.class));
+        Assert.assertNotNull("Null Application instance", injector.getInstance(Application.class));
     }
 
     public void testInjectionInstances() {
-        final Service Service = getService();
-        Assert.assertNotNull("Null Service in test", Service);
+        final Service service = getService();
+        Assert.assertNotNull("Null Service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(Service));
+        final Injector injector = Guice.createInjector(new ServiceModule(service));
 
-        Assert.assertSame("Invalid Service instance",          Service,                               injector.getInstance(Service.class));
-        Assert.assertSame("Invalid Application instance",       Service.getApplication(),              injector.getInstance(Application.class));
+        Assert.assertSame("Invalid Service instance", service, injector.getInstance(Service.class));
+        Assert.assertSame("Invalid Application instance", service.getApplication(), injector.getInstance(Application.class));
     }
 
     public void testInjectee() {
-        final Service Service = getService();
-        Assert.assertNotNull("Null Service in test", Service);
+        final Service service = getService();
+        Assert.assertNotNull("Null Service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(Service));
-        injector.getInstance(ServiceInjectee.class).validate(Service);
+        final Injector injector = Guice.createInjector(new ServiceModule(service));
+        injector.getInstance(ServiceInjectee.class).validate(service);
+    }
+
+    public void testInjection() {
+        final Service service = getService();
+        Assert.assertNotNull("Null Service in test", service);
+
+        Injection.createInjector(service).getInstance(ServiceInjectee.class).validate(service);
     }
 
     /* ========================================================================================== */

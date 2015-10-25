@@ -35,6 +35,7 @@ import com.google.inject.Module;
 
 import junit.framework.Assert;
 
+import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.SystemModule;
 
 public class SystemModuleTest extends AndroidTestCase {
@@ -131,6 +132,13 @@ public class SystemModuleTest extends AndroidTestCase {
         });
 
         injector.getInstance(SystemServicesInjectee.class).validate(context);
+    }
+
+    public void testInjection() {
+        final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
+
+        Injection.createInjector(context).getInstance(SystemServicesInjectee.class).validate(context);
     }
 
     /* ========================================================================================== */

@@ -10,7 +10,6 @@ import android.media.session.MediaController;
 import android.transition.TransitionManager;
 import android.view.MenuInflater;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -22,7 +21,6 @@ import de.lemona.android.guice.activity.LoaderManagerProvider;
 import de.lemona.android.guice.activity.MediaControllerProvider;
 import de.lemona.android.guice.activity.MenuInflaterProvider;
 import de.lemona.android.guice.activity.TransitionManagerProvider;
-import de.lemona.android.guice.activity.WindowManagerProvider;
 import de.lemona.android.guice.activity.WindowProvider;
 
 public class ActivityModule implements Module {
@@ -47,7 +45,6 @@ public class ActivityModule implements Module {
         binder.bind(MediaController.class).toProvider(MediaControllerProvider.class);
         binder.bind(MenuInflater.class).toProvider(MenuInflaterProvider.class);
         binder.bind(TransitionManager.class).toProvider(TransitionManagerProvider.class);
-        binder.bind(WindowManager.class).toProvider(WindowManagerProvider.class);
         binder.bind(Window.class).toProvider(WindowProvider.class);
     }
 }

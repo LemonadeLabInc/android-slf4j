@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.media.session.MediaController;
@@ -21,6 +22,7 @@ import com.google.inject.Injector;
 import junit.framework.Assert;
 
 import de.lemona.android.guice.ActivityModule;
+import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.Nullable;
 
 public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
@@ -55,7 +57,6 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
         //Assert.assertNotNull("Null MediaController instance",   injector.getInstance(MediaController.class));
         Assert.assertNotNull("Null MenuInflater instance",      injector.getInstance(MenuInflater.class));
         Assert.assertNotNull("Null TransitionManager instance", injector.getInstance(TransitionManager.class));
-        Assert.assertNotNull("Null WindowManager instance",     injector.getInstance(WindowManager.class));
         Assert.assertNotNull("Null Window instance",            injector.getInstance(Window.class));
     }
 
@@ -66,16 +67,15 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
         final Injector injector = Guice.createInjector(new ActivityModule(activity));
 
         Assert.assertSame("Invalid Activity instance",          activity,                               injector.getInstance(Activity.class));
-        Assert.assertSame("Invalid Application instance",       activity.getApplication(),              injector.getInstance(Application.class));
-        Assert.assertSame("Invalid ActionBar instance",         activity.getActionBar(),                injector.getInstance(ActionBar.class));
-        Assert.assertSame("Invalid ComponentName instance",     activity.getComponentName(),            injector.getInstance(ComponentName.class));
-        Assert.assertSame("Invalid FragmentManager instance",   activity.getFragmentManager(),          injector.getInstance(FragmentManager.class));
-        Assert.assertSame("Invalid LoaderManager instance",     activity.getLoaderManager(),            injector.getInstance(LoaderManager.class));
-        Assert.assertSame("Invalid MediaController instance",   activity.getMediaController(),          injector.getInstance(MediaController.class));
-        Assert.assertSame("Invalid MenuInflater instance",      activity.getMenuInflater(),             injector.getInstance(MenuInflater.class));
+        Assert.assertSame("Invalid Application instance", activity.getApplication(), injector.getInstance(Application.class));
+        Assert.assertSame("Invalid ActionBar instance", activity.getActionBar(), injector.getInstance(ActionBar.class));
+        Assert.assertSame("Invalid ComponentName instance", activity.getComponentName(), injector.getInstance(ComponentName.class));
+        Assert.assertSame("Invalid FragmentManager instance", activity.getFragmentManager(), injector.getInstance(FragmentManager.class));
+        Assert.assertSame("Invalid LoaderManager instance", activity.getLoaderManager(), injector.getInstance(LoaderManager.class));
+        Assert.assertSame("Invalid MediaController instance", activity.getMediaController(), injector.getInstance(MediaController.class));
+        Assert.assertSame("Invalid MenuInflater instance", activity.getMenuInflater(), injector.getInstance(MenuInflater.class));
         Assert.assertSame("Invalid TransitionManager instance", activity.getContentTransitionManager(), injector.getInstance(TransitionManager.class));
-        Assert.assertSame("Invalid WindowManager instance",     activity.getWindowManager(),            injector.getInstance(WindowManager.class));
-        Assert.assertSame("Invalid Window instance",            activity.getWindow(),                   injector.getInstance(Window.class));
+        Assert.assertSame("Invalid Window instance", activity.getWindow(), injector.getInstance(Window.class));
     }
 
     public void testInjectee() {
@@ -84,6 +84,13 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
 
         final Injector injector = Guice.createInjector(new ActivityModule(activity));
         injector.getInstance(ActivityInjectee.class).validate(activity);
+    }
+
+    public void testInjection() {
+        final Activity activity = getActivity();
+        Assert.assertNotNull("Null activity in test", activity);
+
+        Injection.createInjector(activity).getInstance(ActivityInjectee.class).validate(activity);
     }
 
     /* ========================================================================================== */
@@ -99,7 +106,6 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
         @Inject @Nullable MediaController mediaController;
         @Inject MenuInflater              menuInflater;
         @Inject TransitionManager         transitionManager;
-        @Inject WindowManager             windowManager;
         @Inject Window                    window;
 
         public void validate(Activity activity) {
@@ -112,7 +118,6 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
             //Assert.assertNotNull("Null MediaController instance",   this.mediaController);
             Assert.assertNotNull("Null MenuInflater instance",      this.menuInflater);
             Assert.assertNotNull("Null TransitionManager instance", this.transitionManager);
-            Assert.assertNotNull("Null WindowManager instance",     this.windowManager);
             Assert.assertNotNull("Null Window instance",            this.window);
 
             Assert.assertSame("Invalid Activity instance",          activity,                               this.activity);
@@ -124,7 +129,6 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
             Assert.assertSame("Invalid MediaController instance",   activity.getMediaController(),          this.mediaController);
             Assert.assertSame("Invalid MenuInflater instance",      activity.getMenuInflater(),             this.menuInflater);
             Assert.assertSame("Invalid TransitionManager instance", activity.getContentTransitionManager(), this.transitionManager);
-            Assert.assertSame("Invalid WindowManager instance",     activity.getWindowManager(),            this.windowManager);
             Assert.assertSame("Invalid Window instance",            activity.getWindow(),                   this.window);
         }
     }

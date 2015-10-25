@@ -1,5 +1,6 @@
 package de.lemona.android.guice.test;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -16,6 +17,7 @@ import junit.framework.Assert;
 
 import de.lemona.android.guice.AppContext;
 import de.lemona.android.guice.ContextModule;
+import de.lemona.android.guice.Injection;
 
 public class ContextModuleTest extends AndroidTestCase {
 
@@ -61,6 +63,13 @@ public class ContextModuleTest extends AndroidTestCase {
 
         final Injector injector = Guice.createInjector(new ContextModule(context));
         injector.getInstance(ContextInjectee.class).validate(context);
+    }
+
+    public void testInjection() {
+        final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
+
+        Injection.createInjector(context).getInstance(ContextInjectee.class).validate(context);
     }
 
     /* ========================================================================================== */
