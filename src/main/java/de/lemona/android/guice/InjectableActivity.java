@@ -27,6 +27,7 @@ public abstract class InjectableActivity extends Activity {
 
         final InjectorWrapper wrapper = (InjectorWrapper) injector;
         if (wrapper.injector != null) throw new IllegalStateException("Already injected");
+
         wrapper.injector = Injection.createInjector(this, modules).getInjector();
         wrapper.injectMembers(this);
     }

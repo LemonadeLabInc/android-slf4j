@@ -30,20 +30,25 @@ public final class Injection {
     }
 
     public static com.google.inject.Injector createGuiceInjector(Context context, Iterable<? extends Module> modules) {
+
         // A simple list of all modules we need to inject
         final List<Module> parent = new ArrayList<>();
-        if (context instanceof Activity) parent.add(new ActivityModule((Activity) context));
-        if (context instanceof Service) parent.add(new ServiceModule((Service) context));
-        parent.add(new ContextModule(context));
         parent.add(new SystemModule());
 
-        // Parent injector is returned if no modules are to be configured
-        final com.google.inject.Injector injector = Guice.createInjector(parent);
-        if (modules == null) return injector;
-        if ((modules instanceof Collection) && ((Collection<?>) modules).isEmpty()) return injector;
+        if (context instanceof Activity) {
+            parent.add(new ActivityModule((Activity) context));
+        } else if (context instanceof Service) {
+            parent.add(new ServiceModule((Service) context));
+        } else {
+            parent.add(new ContextModule(context));
+        }
 
-        // Create a child injector (potentially overriding defaults)
-        return Guice.createInjector(parent).createChildInjector(modules);
+        // If we have no extra modules, the parent injector will suffice, otherwise override with child
+        if ((modules == null) || ((modules instanceof Collection) && ((Collection<?>) modules).isEmpty())) {
+            return Guice.createInjector(parent);
+        } else {
+            return Guice.createInjector(parent).createChildInjector(modules);
+        }
     }
 
     /* ========================================================================================== */

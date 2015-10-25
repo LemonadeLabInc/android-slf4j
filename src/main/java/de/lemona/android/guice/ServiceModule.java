@@ -1,25 +1,25 @@
 package de.lemona.android.guice;
 
+import com.google.inject.Binder;
+
 import android.app.Application;
 import android.app.Service;
+import de.lemona.android.guice.context.ApplicationProvider;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-
-import de.lemona.android.guice.context.ServiceApplicationProvider;
-
-public class ServiceModule implements Module {
+public class ServiceModule extends ContextModule {
 
     private final Service service;
 
     public ServiceModule(Service service) {
-        if (service == null) throw new NullPointerException("Null service");
+        super(service);
         this.service = service;
     }
 
     @Override
     public void configure(Binder binder) {
-        binder.bind(Service.class).toInstance(service);
-        binder.bind(Application.class).toProvider(ServiceApplicationProvider.class);
+        super.configure(binder);
+
+        binder.bind(Service.class).toProvider(new InstanceProvider<>(service));
+        binder.bind(Application.class).toProvider(ApplicationProvider.class);
     }
 }
