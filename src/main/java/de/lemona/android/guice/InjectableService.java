@@ -8,6 +8,8 @@ import android.app.Service;
 
 public abstract class InjectableService extends Service {
 
+    static { Injection.init(); }
+
     private volatile Injector injector = null;
     private final Iterable<? extends Module> modules;
 

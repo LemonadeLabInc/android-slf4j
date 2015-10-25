@@ -29,6 +29,8 @@ import de.lemona.android.guice.system.WindowManagerProvider;
 
 public class SystemModule implements Module {
 
+    static { Injection.init(); }
+
     @Override
     public void configure(Binder binder) {
         binder.bind(android.app.ActivityManager.class).toProvider(ActivityManagerProvider.class);

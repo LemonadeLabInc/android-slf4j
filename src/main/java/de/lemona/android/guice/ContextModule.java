@@ -18,6 +18,8 @@ import de.lemona.android.guice.context.PackageManagerProvider;
 
 public class ContextModule implements Module {
 
+    static { Injection.init(); }
+
     private final Context context;
 
     public ContextModule(Context context) {

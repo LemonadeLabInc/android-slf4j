@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import com.google.inject.Guice;
 import com.google.inject.Module;
+import com.google.inject.internal.util.$FinalizableReferenceQueue;
 
 import android.app.Activity;
 import android.app.Service;
@@ -17,6 +21,24 @@ public final class Injection {
     private Injection() {
         throw new IllegalStateException("Do not construct");
     }
+
+    /* ========================================================================================== */
+
+    // Filter annoying log for which we can do nothing about...
+    private static boolean initialized = false;
+    static final void init() {
+        if (initialized) return;
+        initialized = true;
+
+        Logger.getLogger($FinalizableReferenceQueue.class.getName()).setFilter(new Filter() {
+            @Override public boolean isLoggable(LogRecord record) {
+                if (record.getMessage().startsWith("Could not load Finalizer")) return false;
+                return true;
+            }
+        });
+    }
+
+    static { Injection.init(); }
 
     /* ========================================================================================== */
 

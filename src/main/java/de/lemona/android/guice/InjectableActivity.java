@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 public abstract class InjectableActivity extends Activity {
 
+    static { Injection.init(); }
+
     private volatile Injector injector = null;
     private final Iterable<? extends Module> modules;
 

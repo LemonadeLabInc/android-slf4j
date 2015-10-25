@@ -8,6 +8,8 @@ import de.lemona.android.guice.context.ApplicationProvider;
 
 public class ServiceModule extends ContextModule {
 
+    static { Injection.init(); }
+
     private final Service service;
 
     public ServiceModule(Service service) {

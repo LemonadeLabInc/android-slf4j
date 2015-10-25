@@ -22,6 +22,8 @@ import de.lemona.android.guice.activity.WindowProvider;
 
 public class ActivityModule extends ContextModule {
 
+    static { Injection.init(); }
+
     private final Activity activity;
 
     public ActivityModule(Activity activity) {
