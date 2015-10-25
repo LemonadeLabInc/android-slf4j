@@ -50,6 +50,7 @@ public class SystemModuleTest extends AndroidTestCase {
 
     public void testNotNullInjection() {
         final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
             @Override
@@ -85,6 +86,7 @@ public class SystemModuleTest extends AndroidTestCase {
 
     public void testInjectionInstances() {
         final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
             @Override public void configure(Binder binder) {
@@ -119,6 +121,7 @@ public class SystemModuleTest extends AndroidTestCase {
 
     public void testInjectee() {
         final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
 
         final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
             @Override

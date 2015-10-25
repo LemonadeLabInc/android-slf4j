@@ -7,29 +7,23 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
 
-import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Module;
 
 import junit.framework.Assert;
 
 import de.lemona.android.guice.AppContext;
 import de.lemona.android.guice.ContextModule;
-import de.lemona.android.guice.SystemModule;
-import de.lemona.android.guice.context.ApplicationInfoProvider;
-import de.lemona.android.guice.context.AssetManagerProvider;
-import de.lemona.android.guice.context.ContentResolverProvider;
-import de.lemona.android.guice.context.PackageManagerProvider;
 
 public class ContextModuleTest extends AndroidTestCase {
 
     public void testNotNullInjection() {
         final Context context = getContext();
         final Context applicationContext = context.getApplicationContext();
-
+        Assert.assertNotNull("Null context in test", context);
+        Assert.assertNotNull("Null applicationContext in test", applicationContext);
         Assert.assertNotSame("Same context/applicationContext", context, applicationContext);
 
         final Injector injector = Guice.createInjector(new ContextModule(context));
@@ -46,7 +40,8 @@ public class ContextModuleTest extends AndroidTestCase {
     public void testInjectionInstances() {
         final Context context = getContext();
         final Context applicationContext = context.getApplicationContext();
-
+        Assert.assertNotNull("Null context in test", context);
+        Assert.assertNotNull("Null applicationContext in test", applicationContext);
         Assert.assertNotSame("Same context/applicationContext", context, applicationContext);
 
         final Injector injector = Guice.createInjector(new ContextModule(context));
@@ -62,6 +57,8 @@ public class ContextModuleTest extends AndroidTestCase {
 
     public void testInjectee() {
         final Context context = getContext();
+        Assert.assertNotNull("Null context in test", context);
+
         final Injector injector = Guice.createInjector(new ContextModule(context));
         injector.getInstance(ContextInjectee.class).validate(context);
     }
