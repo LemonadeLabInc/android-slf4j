@@ -1,18 +1,16 @@
 package de.lemona.android.guice.test;
 
-import android.app.Application;
-import android.app.Service;
-import android.content.Intent;
-import android.test.ServiceTestCase;
-
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-import junit.framework.Assert;
-
+import android.app.Application;
+import android.app.Service;
+import android.content.Intent;
+import android.test.ServiceTestCase;
 import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.ServiceModule;
+import junit.framework.Assert;
 
 public class ServiceModuleTest extends ServiceTestCase<TestService> {
 
@@ -24,11 +22,6 @@ public class ServiceModuleTest extends ServiceTestCase<TestService> {
     protected void setUp() throws Exception {
         super.setUp();
         this.bindService(new Intent(getSystemContext(), TestService.class));
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 
     public void testNotNullInjection() {

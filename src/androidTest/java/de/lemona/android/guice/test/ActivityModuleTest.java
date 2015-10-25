@@ -1,11 +1,14 @@
 package de.lemona.android.guice.test;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.media.session.MediaController;
@@ -13,17 +16,10 @@ import android.test.ActivityUnitTestCase;
 import android.transition.TransitionManager;
 import android.view.MenuInflater;
 import android.view.Window;
-import android.view.WindowManager;
-
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-
-import junit.framework.Assert;
-
 import de.lemona.android.guice.ActivityModule;
 import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.Nullable;
+import junit.framework.Assert;
 
 public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
 
@@ -35,11 +31,6 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
     protected void setUp() throws Exception {
         super.setUp();
         startActivity(new Intent(getInstrumentation().getTargetContext(), TestActivity.class), null, null);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 
     public void testNotNullInjection() {

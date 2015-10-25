@@ -1,23 +1,20 @@
 package de.lemona.android.guice.test;
 
-import android.app.Activity;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
-
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-
-import junit.framework.Assert;
-
 import de.lemona.android.guice.AppContext;
 import de.lemona.android.guice.ContextModule;
 import de.lemona.android.guice.Injection;
+import junit.framework.Assert;
 
 public class ContextModuleTest extends AndroidTestCase {
 
