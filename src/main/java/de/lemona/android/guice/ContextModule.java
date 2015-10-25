@@ -1,8 +1,5 @@
 package de.lemona.android.guice;
 
-import android.app.Activity;
-import android.app.Application;
-import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

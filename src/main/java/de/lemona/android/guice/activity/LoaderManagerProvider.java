@@ -1,7 +1,7 @@
 package de.lemona.android.guice.activity;
 
-import android.app.LoaderManager;
 import android.app.Activity;
+import android.app.LoaderManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

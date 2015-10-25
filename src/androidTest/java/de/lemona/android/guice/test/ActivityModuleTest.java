@@ -6,7 +6,6 @@ import android.app.Application;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.media.session.MediaController;
 import android.test.ActivityUnitTestCase;
@@ -22,7 +21,6 @@ import com.google.inject.Injector;
 import junit.framework.Assert;
 
 import de.lemona.android.guice.ActivityModule;
-import de.lemona.android.guice.ContextModule;
 import de.lemona.android.guice.Nullable;
 
 public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {

@@ -1,7 +1,7 @@
 package de.lemona.android.guice.activity;
 
-import android.app.FragmentManager;
 import android.app.Activity;
+import android.app.FragmentManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
