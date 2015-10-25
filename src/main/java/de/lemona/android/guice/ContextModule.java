@@ -27,16 +27,6 @@ public class ContextModule implements Module {
         this.context = context;
     }
 
-    public ContextModule(Activity activity) {
-        if (activity == null) throw new NullPointerException("Null activity");
-        this.context = activity;
-    }
-
-    public ContextModule(Service service) {
-        if (service == null) throw new NullPointerException("Null service");
-        this.context = service;
-    }
-
     @Override
     public void configure(Binder binder) {
         // Basic context and application context
