@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import de.lemona.android.guice.context.ApplicationContextProvider;
 import de.lemona.android.guice.context.ApplicationInfoProvider;
 import de.lemona.android.guice.context.ApplicationProvider;
 import de.lemona.android.guice.context.AssetManagerProvider;
 import de.lemona.android.guice.context.ContentResolverProvider;
 import de.lemona.android.guice.context.PackageManagerProvider;
+import de.lemona.android.guice.context.ResourcesProvider;
 
 public class ContextModule implements Module {
 
@@ -39,5 +41,6 @@ public class ContextModule implements Module {
         binder.bind(AssetManager.class).toProvider(AssetManagerProvider.class);
         binder.bind(ContentResolver.class).toProvider(ContentResolverProvider.class);
         binder.bind(PackageManager.class).toProvider(PackageManagerProvider.class);
+        binder.bind(Resources.class).toProvider(ResourcesProvider.class);
     }
 }

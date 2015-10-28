@@ -42,16 +42,16 @@ public final class Injection {
 
     /* ========================================================================================== */
 
-    public static com.google.inject.Injector createGuiceInjector(Context context) {
-        return createGuiceInjector(context, (Iterable<Module>) null);
+    public static com.google.inject.Injector createInjector(Context context) {
+        return createInjector(context, (Iterable<Module>) null);
     }
 
-    public static com.google.inject.Injector createGuiceInjector(Context context, Module... modules) {
-        if ((modules == null) || (modules.length == 0)) return createGuiceInjector(context, (Iterable<Module>) null);
-        return createGuiceInjector(context, Arrays.asList(modules));
+    public static com.google.inject.Injector createInjector(Context context, Module... modules) {
+        if ((modules == null) || (modules.length == 0)) return createInjector(context, (Iterable<Module>) null);
+        return createInjector(context, Arrays.asList(modules));
     }
 
-    public static com.google.inject.Injector createGuiceInjector(Context context, Iterable<? extends Module> modules) {
+    public static com.google.inject.Injector createInjector(Context context, Iterable<? extends Module> modules) {
 
         // A simple list of all modules we need to inject
         final List<Module> parent = new ArrayList<>();
@@ -71,19 +71,5 @@ public final class Injection {
         } else {
             return Guice.createInjector(parent).createChildInjector(modules);
         }
-    }
-
-    /* ========================================================================================== */
-
-    public static Injector createInjector(Context context) {
-        return new InjectorWrapper(createGuiceInjector(context));
-    }
-
-    public static Injector createInjector(Context context, Module... modules) {
-        return new InjectorWrapper(createGuiceInjector(context, modules));
-    }
-
-    public static Injector createInjector(Context context, Iterable<? extends Module> modules) {
-        return new InjectorWrapper(createGuiceInjector(context, modules));
     }
 }

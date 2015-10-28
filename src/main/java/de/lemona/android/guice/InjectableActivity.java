@@ -2,6 +2,7 @@ package de.lemona.android.guice;
 
 import java.util.Arrays;
 
+import com.google.inject.Injector;
 import com.google.inject.Module;
 
 import android.app.Activity;

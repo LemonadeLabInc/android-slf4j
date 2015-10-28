@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.test.AndroidTestCase;
 import de.lemona.android.guice.AppContext;
 import de.lemona.android.guice.ContextModule;
@@ -34,6 +35,7 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertNotNull("Null AssetManager instance", injector.getInstance(AssetManager.class));
         Assert.assertNotNull("Null ContentResolver instance", injector.getInstance(ContentResolver.class));
         Assert.assertNotNull("Null PackageManager instance", injector.getInstance(PackageManager.class));
+        Assert.assertNotNull("Null Resources instance", injector.getInstance(Resources.class));
     }
 
     public void testInjectionInstances() {
@@ -52,6 +54,7 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertSame("Wrong AssetManager instance", context.getAssets(), injector.getInstance(AssetManager.class));
         Assert.assertSame("Wrong ContentResolver instance", context.getContentResolver(), injector.getInstance(ContentResolver.class));
         Assert.assertSame("Wrong PackageManager instance", context.getPackageManager(), injector.getInstance(PackageManager.class));
+        Assert.assertSame("Wrong Resources instance", context.getResources(), injector.getInstance(Resources.class));
     }
 
     public void testInjectee() {
@@ -79,6 +82,7 @@ public class ContextModuleTest extends AndroidTestCase {
         @Inject AssetManager assetManager;
         @Inject ContentResolver contentResolver;
         @Inject PackageManager packageManager;
+        @Inject Resources resources;
 
         public void validate(Context context) {
 
@@ -89,6 +93,7 @@ public class ContextModuleTest extends AndroidTestCase {
             Assert.assertNotNull("Null AssetManager instance", this.assetManager);
             Assert.assertNotNull("Null ContentResolver instance", this.contentResolver);
             Assert.assertNotNull("Null PackageManager instance", this.packageManager);
+            Assert.assertNotNull("Null Resources instance", this.resources);
 
             Assert.assertSame("Wrong Application Context instance", context.getApplicationContext(), this.applicationContext);
             Assert.assertSame("Wrong Context instance", context, this.context);
@@ -97,6 +102,7 @@ public class ContextModuleTest extends AndroidTestCase {
             Assert.assertSame("Wrong AssetManager instance", context.getAssets(), this.assetManager);
             Assert.assertSame("Wrong ContentResolver instance", context.getContentResolver(), this.contentResolver);
             Assert.assertSame("Wrong PackageManager instance", context.getPackageManager(), this.packageManager);
+            Assert.assertSame("Wrong Resources instance", context.getResources(), this.resources);
         }
     }
 }
