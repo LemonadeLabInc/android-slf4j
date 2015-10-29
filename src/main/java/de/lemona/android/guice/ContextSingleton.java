@@ -1,18 +1,16 @@
 package de.lemona.android.guice;
-
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.google.inject.BindingAnnotation;
+import com.google.inject.ScopeAnnotation;
 
-@BindingAnnotation
+@ScopeAnnotation
 @Retention(RUNTIME)
-@Target({FIELD, PARAMETER, METHOD})
-public @interface AppContext {
+@Target({ TYPE, METHOD })
+public @interface ContextSingleton {
     // Empty annotation
 }

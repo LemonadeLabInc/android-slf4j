@@ -19,6 +19,10 @@ import junit.framework.Assert;
 
 public class TestInjectableActivity extends InjectableActivity {
 
+    public TestInjectableActivity() {
+        super(new TestModule());
+    }
+
     @Inject private Activity                  activity;
     @Inject private Application               application;
     @Inject @Nullable private ActionBar       actionBar;
@@ -45,11 +49,11 @@ public class TestInjectableActivity extends InjectableActivity {
 
         Assert.assertNotNull("Null Activity instance",          this.activity);
         Assert.assertNotNull("Null Application instance",       this.application);
-//        Assert.assertNotNull("Null ActionBar instance",         this.actionBar);
+//      Assert.assertNotNull("Null ActionBar instance",         this.actionBar);
         Assert.assertNotNull("Null ComponentName instance",     this.componentName);
         Assert.assertNotNull("Null FragmentManager instance",   this.fragmentManager);
         Assert.assertNotNull("Null LoaderManager instance",     this.loaderManager);
-        //Assert.assertNotNull("Null MediaController instance",   this.mediaController);
+//      Assert.assertNotNull("Null MediaController instance",   this.mediaController);
         Assert.assertNotNull("Null MenuInflater instance",      this.menuInflater);
         Assert.assertNotNull("Null TransitionManager instance", this.transitionManager);
         Assert.assertNotNull("Null Window instance",            this.window);
@@ -67,9 +71,4 @@ public class TestInjectableActivity extends InjectableActivity {
         Assert.assertSame("Invalid TransitionManager instance", this.getContentTransitionManager(), this.transitionManager);
         Assert.assertSame("Invalid Window instance",            this.getWindow(),                   this.window);
     }
-
-    public TestInjectableActivity() {
-        super(new TestModule());
-    }
-
 }

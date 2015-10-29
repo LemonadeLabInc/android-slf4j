@@ -2,7 +2,6 @@ package de.lemona.android.guice;
 
 import java.util.Arrays;
 
-import com.google.inject.Injector;
 import com.google.inject.Module;
 
 import android.app.Activity;
@@ -12,7 +11,6 @@ public abstract class InjectableActivity extends Activity {
 
     static { Injection.init(); }
 
-    private volatile Injector injector = null;
     private final Iterable<? extends Module> modules;
 
     protected InjectableActivity(Module... modules) {
@@ -23,18 +21,9 @@ public abstract class InjectableActivity extends Activity {
         this.modules = modules;
     }
 
-    protected Injector getInjector() {
-        if (injector == null) throw new IllegalStateException("Injector unavailable");
-        return injector;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (this.injector == null) {
-            this.injector = Injection.createInjector(this, modules);
-            this.injector.injectMembers(this);
-        }
+        Injection.createInjector(this, modules);
     }
 }

@@ -1,6 +1,5 @@
 package de.lemona.android.guice.test;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -13,7 +12,6 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.test.AndroidTestCase;
 import de.lemona.android.guice.AppContext;
-import de.lemona.android.guice.ContextModule;
 import de.lemona.android.guice.Injection;
 import junit.framework.Assert;
 
@@ -26,7 +24,7 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertNotNull("Null applicationContext in test", applicationContext);
         Assert.assertNotSame("Same context/applicationContext", context, applicationContext);
 
-        final Injector injector = Guice.createInjector(new ContextModule(context));
+        final Injector injector = Injection.createInjector(context);
 
         Assert.assertNotNull("Null Context instance", injector.getInstance(Context.class));
         Assert.assertNotNull("Null Context instance", injector.getInstance(Key.get(Context.class, AppContext.class)));
@@ -45,7 +43,7 @@ public class ContextModuleTest extends AndroidTestCase {
         Assert.assertNotNull("Null applicationContext in test", applicationContext);
         Assert.assertNotSame("Same context/applicationContext", context, applicationContext);
 
-        final Injector injector = Guice.createInjector(new ContextModule(context));
+        final Injector injector = Injection.createInjector(context);
 
         Assert.assertSame("Wrong Context instance", context, injector.getInstance(Context.class));
         Assert.assertSame("Wrong Application Context instance", context.getApplicationContext(), injector.getInstance(Key.get(Context.class, AppContext.class)));
@@ -61,7 +59,7 @@ public class ContextModuleTest extends AndroidTestCase {
         final Context context = getContext();
         Assert.assertNotNull("Null context in test", context);
 
-        final Injector injector = Guice.createInjector(new ContextModule(context));
+        final Injector injector = Injection.createInjector(context);
         injector.getInstance(ContextInjectee.class).validate(context);
     }
 

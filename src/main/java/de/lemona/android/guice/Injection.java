@@ -1,8 +1,11 @@
 package de.lemona.android.guice;
 
+import static com.google.inject.Stage.PRODUCTION;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -18,8 +21,6 @@ import com.google.inject.Module;
 import com.google.inject.ProvisionException;
 import com.google.inject.internal.util.$FinalizableReferenceQueue;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageItemInfo;
@@ -27,6 +28,8 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 public final class Injection {
+
+    private static final String TAG = Injection.class.getPackage().getName();
 
     private Injection() {
         throw new IllegalStateException("Do not construct");
@@ -52,30 +55,30 @@ public final class Injection {
 
     /* ========================================================================================== */
 
-    public static Injector createInjector(Context context) {
+    public static ContextInjector createInjector(Context context) {
         return createInjector(context, (Iterable<Module>) null);
     }
 
-    public static Injector createInjector(Context context, Module... modules) {
+    public static ContextInjector createInjector(Context context, Module... modules) {
         if ((modules == null) || (modules.length == 0)) return createInjector(context, (Iterable<Module>) null);
         return createInjector(context, Arrays.asList(modules));
     }
 
-    public static Injector createInjector(Context context, Iterable<? extends Module> modules) {
+    public static ContextInjector createInjector(Context context, Iterable<? extends Module> modules) {
 
-        // A simple list of all modules we need to inject
-        final List<Module> parentModule = new ArrayList<>();
-        parentModule.add(new SystemModule());
-
-        if (context instanceof Activity) {
-            parentModule.add(new ActivityModule((Activity) context));
-        } else if (context instanceof Service) {
-            parentModule.add(new ServiceModule((Service) context));
-        }
-
+        if (modules == null) modules = Collections.emptySet();
         final Injector applicationInjector = applicationInjector(context);
-        final Injector parentInjector = applicationInjector.createChildInjector(parentModule);
-        return modules == null ? parentInjector : parentInjector.createChildInjector(modules);
+        final ContextScope scope = applicationInjector.getInstance(ContextScope.class);
+
+        scope.pushContext(context);
+        try {
+            Log.d(TAG, "Creating context injector for \"" + context.getClass().getName() + "\"");
+            final Injector injector = applicationInjector.createChildInjector(modules);
+            injector.injectMembers(context);
+            return new ContextInjector(injector, context);
+        } finally {
+            scope.popContext();
+        }
     }
 
     /* ========================================================================================== */
@@ -89,17 +92,21 @@ public final class Injection {
                                    | PackageManager.GET_SERVICES;
 
     private static Injector applicationInjector(Context childContext) {
-        final Context context = childContext.getApplicationContext();
-        final Injector existing = applicationInjectors.get(context);
+
+        final Context applicationContext = childContext.getApplicationContext();
+        final Injector existing = applicationInjectors.get(applicationContext);
         if (existing != null) return existing;
 
         synchronized (applicationInjectors) {
-            final Injector previous = applicationInjectors.get(context);
+            final Injector previous = applicationInjectors.get(applicationContext);
             if (previous != null) return existing;
 
-            final String packageName = context.getPackageName();
-            final PackageManager packageManager = context.getPackageManager();
+            final String packageName = applicationContext.getPackageName();
+            final PackageManager packageManager = applicationContext.getPackageManager();
             final PackageInfo packageInfo;
+
+            Log.i(TAG, "Creating application injector for package \"" + packageName + "\"");
+
             try {
                 packageInfo = packageManager.getPackageInfo(packageName, FLAGS);
             } catch (final Exception exception) {
@@ -113,19 +120,15 @@ public final class Injection {
             findComponents(componentClasses, packageInfo.receivers);
             findComponents(componentClasses, packageInfo.services);
 
-            Log.i("TAG", "Found " + componentClasses + " component classes");
-
-            final ClassLoader classLoader = context.getClassLoader();
+            final ClassLoader classLoader = applicationContext.getClassLoader();
 
             final Set<Class<? extends Module>> moduleClasses = new HashSet<>();
             for (final String className: componentClasses) {
                 findModules(classLoader, className, moduleClasses);
             }
 
-            Log.i("TAG", "Found " + moduleClasses + " module classes");
-
             final List<Module> modules = new ArrayList<>();
-            modules.add(new ApplicationModule(context));
+            modules.add(new AndroidModule(applicationContext));
 
             for (final Class<? extends Module> moduleClass: moduleClasses) try {
                 modules.add(moduleClass.newInstance());
@@ -133,16 +136,18 @@ public final class Injection {
                 throw new ProvisionException("Unable to instantiate module " + moduleClass.getName(), exception);
             }
 
-            Log.i("TAG", "Found " + modules + " modules");
+            // Create in "PRODUCTION" to early instantiate all singletons...
+            final Injector injector = Guice.createInjector(PRODUCTION, modules);
+            applicationInjectors.put(applicationContext, injector);
+            injector.injectMembers(applicationContext);
 
-            final Injector injector = Guice.createInjector(modules);
-            applicationInjectors.put(context, injector);
+            Log.i(TAG, "Injector for package \"" + packageName + "\" created");
+
             return injector;
         }
     }
 
     private static void findComponents(Collection<String> classNames, PackageItemInfo[] infos) {
-        Log.i("TAG", "Processing " + (infos == null ? -1 : infos.length) + " info items");
         if (infos == null) return;
         for (final PackageItemInfo info: infos) {
             classNames.add(info.name.startsWith(".") ? info.packageName + info.name : info.name);
@@ -158,11 +163,10 @@ public final class Injection {
             throw new ProvisionException("Unable to load component class " + className, exception);
         }
 
-        Log.i("TAG", "Component class is " + className + ": " + componentClass.isAnnotationPresent(Modules.class));
-
-        if (componentClass.isAnnotationPresent(Modules.class)) {
-            final Modules annotation = componentClass.getAnnotation(Modules.class);
+        if (componentClass.isAnnotationPresent(AppModules.class)) {
+            final AppModules annotation = componentClass.getAnnotation(AppModules.class);
             for (final Class<? extends Module> moduleClass: annotation.value()) {
+                Log.i(TAG, "Application class \"" + componentClass.getName() + "\" declares module \"" + moduleClass.getName() + "\"");
                 moduleClasses.add(moduleClass);
             }
         }

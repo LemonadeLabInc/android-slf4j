@@ -1,5 +1,8 @@
 package de.lemona.android.guice.test;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.DownloadManager;
@@ -25,40 +28,16 @@ import android.test.AndroidTestCase;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import com.google.inject.Binder;
-import com.google.inject.CreationException;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-
+import de.lemona.android.guice.Injection;
 import junit.framework.Assert;
 
-import de.lemona.android.guice.Injection;
-import de.lemona.android.guice.SystemModule;
-
 public class SystemModuleTest extends AndroidTestCase {
-
-    public void testNoContext() {
-        try {
-            Guice.createInjector(new SystemModule());
-            Assert.fail("No exception caught");
-        } catch (CreationException exception) {
-            return;
-        }
-    }
 
     public void testNotNullInjection() {
         final Context context = getContext();
         Assert.assertNotNull("Null context in test", context);
 
-        final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
-            @Override
-            public void configure(Binder binder) {
-                binder.bind(Context.class).toInstance(context);
-            }
-        });
+        final Injector injector = Injection.createInjector(context);
 
         Assert.assertNotNull("Null ActivityManager instance", injector.getInstance(ActivityManager.class));
         Assert.assertNotNull("Null AlarmManager instance", injector.getInstance(AlarmManager.class));
@@ -89,11 +68,7 @@ public class SystemModuleTest extends AndroidTestCase {
         final Context context = getContext();
         Assert.assertNotNull("Null context in test", context);
 
-        final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
-            @Override public void configure(Binder binder) {
-                binder.bind(Context.class).toInstance(context);
-            }
-        });
+        final Injector injector = Injection.createInjector(context);
 
         Assert.assertSame("Wrong ActivityManager instance",     context.getSystemService(Context.ACTIVITY_SERVICE),               injector.getInstance(ActivityManager.class));
         Assert.assertSame("Wrong AlarmManager instance",        context.getSystemService(Context.ALARM_SERVICE),                  injector.getInstance(AlarmManager.class));
@@ -124,12 +99,7 @@ public class SystemModuleTest extends AndroidTestCase {
         final Context context = getContext();
         Assert.assertNotNull("Null context in test", context);
 
-        final Injector injector = Guice.createInjector(new SystemModule(), new Module() {
-            @Override
-            public void configure(Binder binder) {
-                binder.bind(Context.class).toInstance(context);
-            }
-        });
+        final Injector injector = Injection.createInjector(context);
 
         injector.getInstance(SystemServicesInjectee.class).validate(context);
     }

@@ -1,6 +1,5 @@
 package de.lemona.android.guice.test;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -16,7 +15,6 @@ import android.test.ActivityUnitTestCase;
 import android.transition.TransitionManager;
 import android.view.MenuInflater;
 import android.view.Window;
-import de.lemona.android.guice.ActivityModule;
 import de.lemona.android.guice.Injection;
 import de.lemona.android.guice.Nullable;
 import junit.framework.Assert;
@@ -37,7 +35,7 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
         final Activity activity = getActivity();
         Assert.assertNotNull("Null activity in test", activity);
 
-        final Injector injector = Guice.createInjector(new ActivityModule(activity));
+        final Injector injector = Injection.createInjector(activity);
 
         Assert.assertNotNull("Null Activity instance",          injector.getInstance(Activity.class));
         Assert.assertNotNull("Null Application instance",       injector.getInstance(Application.class));
@@ -55,25 +53,25 @@ public class ActivityModuleTest extends ActivityUnitTestCase<TestActivity> {
         final Activity activity = getActivity();
         Assert.assertNotNull("Null activity in test", activity);
 
-        final Injector injector = Guice.createInjector(new ActivityModule(activity));
+        final Injector injector = Injection.createInjector(activity);
 
         Assert.assertSame("Invalid Activity instance",          activity,                               injector.getInstance(Activity.class));
-        Assert.assertSame("Invalid Application instance", activity.getApplication(), injector.getInstance(Application.class));
-        Assert.assertSame("Invalid ActionBar instance", activity.getActionBar(), injector.getInstance(ActionBar.class));
-        Assert.assertSame("Invalid ComponentName instance", activity.getComponentName(), injector.getInstance(ComponentName.class));
-        Assert.assertSame("Invalid FragmentManager instance", activity.getFragmentManager(), injector.getInstance(FragmentManager.class));
-        Assert.assertSame("Invalid LoaderManager instance", activity.getLoaderManager(), injector.getInstance(LoaderManager.class));
-        Assert.assertSame("Invalid MediaController instance", activity.getMediaController(), injector.getInstance(MediaController.class));
-        Assert.assertSame("Invalid MenuInflater instance", activity.getMenuInflater(), injector.getInstance(MenuInflater.class));
+        Assert.assertSame("Invalid Application instance",       activity.getApplication(),               injector.getInstance(Application.class));
+        Assert.assertSame("Invalid ActionBar instance",         activity.getActionBar(),                injector.getInstance(ActionBar.class));
+        Assert.assertSame("Invalid ComponentName instance",     activity.getComponentName(),            injector.getInstance(ComponentName.class));
+        Assert.assertSame("Invalid FragmentManager instance",   activity.getFragmentManager(),          injector.getInstance(FragmentManager.class));
+        Assert.assertSame("Invalid LoaderManager instance",     activity.getLoaderManager(),            injector.getInstance(LoaderManager.class));
+        Assert.assertSame("Invalid MediaController instance",   activity.getMediaController(),          injector.getInstance(MediaController.class));
+        Assert.assertSame("Invalid MenuInflater instance",      activity.getMenuInflater(),             injector.getInstance(MenuInflater.class));
         Assert.assertSame("Invalid TransitionManager instance", activity.getContentTransitionManager(), injector.getInstance(TransitionManager.class));
-        Assert.assertSame("Invalid Window instance", activity.getWindow(), injector.getInstance(Window.class));
+        Assert.assertSame("Invalid Window instance",            activity.getWindow(),                   injector.getInstance(Window.class));
     }
 
     public void testInjectee() {
         final Activity activity = getActivity();
         Assert.assertNotNull("Null activity in test", activity);
 
-        final Injector injector = Guice.createInjector(new ActivityModule(activity));
+        final Injector injector = Injection.createInjector(activity);
         injector.getInstance(ActivityInjectee.class).validate(activity);
     }
 

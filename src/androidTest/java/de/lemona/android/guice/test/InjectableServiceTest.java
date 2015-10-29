@@ -17,9 +17,9 @@ public class InjectableServiceTest extends ServiceTestCase<TestInjectableService
     }
 
     public void testInjectee() {
-        final TestInjectableService Service = getService();
-        Assert.assertNotNull("Null Service in test", Service);
-        Service.validate();
+        final TestInjectableService service = getService();
+        Assert.assertNotNull("Null Service in test", service);
+        service.validate();
     }
 
 }

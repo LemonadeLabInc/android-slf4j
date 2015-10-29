@@ -1,6 +1,5 @@
 package de.lemona.android.guice.test;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -9,7 +8,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.test.ServiceTestCase;
 import de.lemona.android.guice.Injection;
-import de.lemona.android.guice.ServiceModule;
 import junit.framework.Assert;
 
 public class ServiceModuleTest extends ServiceTestCase<TestService> {
@@ -28,7 +26,7 @@ public class ServiceModuleTest extends ServiceTestCase<TestService> {
         final Service service = getService();
         Assert.assertNotNull("Null service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(service));
+        final Injector injector = Injection.createInjector(service);
 
         Assert.assertNotNull("Null service instance",     injector.getInstance(Service.class));
         Assert.assertNotNull("Null Application instance", injector.getInstance(Application.class));
@@ -38,7 +36,7 @@ public class ServiceModuleTest extends ServiceTestCase<TestService> {
         final Service service = getService();
         Assert.assertNotNull("Null Service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(service));
+        final Injector injector = Injection.createInjector(service);
 
         Assert.assertSame("Invalid Service instance", service, injector.getInstance(Service.class));
         Assert.assertSame("Invalid Application instance", service.getApplication(), injector.getInstance(Application.class));
@@ -48,7 +46,7 @@ public class ServiceModuleTest extends ServiceTestCase<TestService> {
         final Service service = getService();
         Assert.assertNotNull("Null Service in test", service);
 
-        final Injector injector = Guice.createInjector(new ServiceModule(service));
+        final Injector injector = Injection.createInjector(service);
         injector.getInstance(ServiceInjectee.class).validate(service);
     }
 
