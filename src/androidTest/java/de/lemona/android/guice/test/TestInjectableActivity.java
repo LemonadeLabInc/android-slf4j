@@ -4,6 +4,7 @@ import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+import android.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
@@ -14,6 +15,8 @@ import android.media.session.MediaController;
 import android.transition.TransitionManager;
 import android.view.MenuInflater;
 import android.view.Window;
+import de.lemona.android.guice.Id;
+import de.lemona.android.guice.Ids;
 import de.lemona.android.guice.InjectableActivity;
 import de.lemona.android.guice.Nullable;
 import junit.framework.Assert;
@@ -23,6 +26,8 @@ public class TestInjectableActivity extends InjectableActivity {
     @Override
     protected void onInject(Binder binder) {
         binder.install(new TestModule());
+        final String yes = this.getString(R.string.yes);
+        binder.bind(String.class).annotatedWith(Ids.id(R.string.yes)).toInstance(yes);
     }
 
     @Inject private Activity                  activity;
@@ -35,6 +40,10 @@ public class TestInjectableActivity extends InjectableActivity {
     @Inject private MenuInflater              menuInflater;
     @Inject private TransitionManager         transitionManager;
     @Inject private Window                    window;
+
+    // Inject here for tests of @Id, this will be in the injector, so normally
+    // used by other classes needing those kinds of resources/views/...
+    @Inject @Id(R.string.yes) private String yes;
 
     String testValue;
 
@@ -60,6 +69,8 @@ public class TestInjectableActivity extends InjectableActivity {
         Assert.assertNotNull("Null TransitionManager instance", this.transitionManager);
         Assert.assertNotNull("Null Window instance",            this.window);
 
+        Assert.assertNotNull("Null resource instance",          this.yes);
+
         Assert.assertSame("Invalid named test value",           TestModule.VALUE,                       this.testValue);
 
         Assert.assertSame("Invalid Activity instance",          this,                               this.activity);
@@ -72,5 +83,7 @@ public class TestInjectableActivity extends InjectableActivity {
         Assert.assertSame("Invalid MenuInflater instance",      this.getMenuInflater(),             this.menuInflater);
         Assert.assertSame("Invalid TransitionManager instance", this.getContentTransitionManager(), this.transitionManager);
         Assert.assertSame("Invalid Window instance",            this.getWindow(),                   this.window);
+
+        Assert.assertSame("Invalid resource instance",          this.getString(R.string.yes), this.yes);
     }
 }
