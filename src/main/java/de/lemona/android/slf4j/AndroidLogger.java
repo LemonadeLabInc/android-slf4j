@@ -7,7 +7,13 @@ import android.util.Log;
 
 public class AndroidLogger extends MarkerIgnoringBase {
 
-    private static final String tag = "Slf4J";
+    private static String tag = "Slf4J";
+
+    public static void initTag(String tagName) {
+        if (tagName != null) tag = tagName;
+    }
+
+    /* ====================================================================== */
 
     private final String name;
     private final String prefix;
