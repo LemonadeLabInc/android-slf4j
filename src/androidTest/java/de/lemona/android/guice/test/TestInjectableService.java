@@ -1,12 +1,12 @@
 package de.lemona.android.guice.test;
 
+import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import android.app.Application;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
 import de.lemona.android.guice.InjectableService;
 import junit.framework.Assert;
@@ -25,11 +25,12 @@ public class TestInjectableService extends InjectableService {
         else this.testValue = this.testValue + testValue;
     }
 
-    public TestInjectableService() {
-        super(new TestModule());
+    @Override
+    public void onInject(Binder binder) {
+        binder.install(new TestModule());
     }
 
-    private final Binder binder = new Binder();
+    private final IBinder binder = new android.os.Binder();
 
     @Override
     public IBinder onBind(Intent intent) {

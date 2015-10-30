@@ -1,7 +1,6 @@
 package de.lemona.android.guice;
 
-import java.util.Arrays;
-
+import com.google.inject.Binder;
 import com.google.inject.Module;
 
 import android.app.Activity;
@@ -11,19 +10,21 @@ public abstract class InjectableActivity extends Activity {
 
     static { Injection.init(); }
 
-    private final Iterable<? extends Module> modules;
-
-    protected InjectableActivity(Module... modules) {
-        this.modules = modules == null ? null : Arrays.asList(modules);
-    }
-
-    protected InjectableActivity(Iterable<? extends Module> modules) {
-        this.modules = modules;
+    protected InjectableActivity() {
+        // I do love protected constructors for abstract classes :-)
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Injection.createInjector(this, modules);
+        Injection.createInjector(this, new Module() {
+            @Override public void configure(Binder binder) {
+                onInject(binder);
+            }
+        });
+    }
+
+    protected void onInject(@SuppressWarnings("unused") Binder binder) {
+        // Allow classes to override this method
     }
 }

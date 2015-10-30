@@ -1,5 +1,6 @@
 package de.lemona.android.guice.test;
 
+import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -19,8 +20,9 @@ import junit.framework.Assert;
 
 public class TestInjectableActivity extends InjectableActivity {
 
-    public TestInjectableActivity() {
-        super(new TestModule());
+    @Override
+    protected void onInject(Binder binder) {
+        binder.install(new TestModule());
     }
 
     @Inject private Activity                  activity;
