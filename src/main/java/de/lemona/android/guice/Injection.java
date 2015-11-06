@@ -159,6 +159,9 @@ public final class Injection {
 
         try {
             componentClass = classLoader.loadClass(className);
+        } catch (final ClassNotFoundException classNotFoundException) {
+            Log.e(TAG, "Unable to find component class " + className + ", so ignore this one");
+            return;
         } catch (final Exception exception) {
             throw new ProvisionException("Unable to load component class " + className, exception);
         }
