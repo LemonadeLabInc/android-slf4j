@@ -2,6 +2,7 @@ package de.lemona.android.guice.providers.system;
 
 import com.google.inject.Provider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 public abstract class AbstractServiceProvider<T>
@@ -19,6 +20,8 @@ implements Provider<T> {
 
     @Override
     public T get() {
-        return type.cast(context.getSystemService(key));
+        @SuppressLint("WrongConstant")
+        Object service = context.getSystemService(key);
+        return type.cast(service);
     }
 }
