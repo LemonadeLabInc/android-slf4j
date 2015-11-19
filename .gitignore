@@ -1,6 +1,5 @@
 *.iml
 .*
 build
-gradle.properties
 local.properties
 project.properties
