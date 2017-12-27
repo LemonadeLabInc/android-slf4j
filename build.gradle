@@ -20,7 +20,7 @@ apply plugin: 'com.android.library'
 
 // Android setup
 android {
-  compileSdkVersion 22
+  compileSdkVersion 25
   buildToolsVersion '27.0.2'
 
   // Instrumentation runner defined here, we publish this...
