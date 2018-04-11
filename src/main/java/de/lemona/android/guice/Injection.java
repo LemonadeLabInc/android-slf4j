@@ -1,6 +1,16 @@
 package de.lemona.android.guice;
 
-import static com.google.inject.Stage.PRODUCTION;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageItemInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.ProvisionException;
+import com.google.inject.internal.util.$FinalizableReferenceQueue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,17 +25,7 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.ProvisionException;
-import com.google.inject.internal.util.$FinalizableReferenceQueue;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageItemInfo;
-import android.content.pm.PackageManager;
-import android.util.Log;
+import static com.google.inject.Stage.PRODUCTION;
 
 public final class Injection {
 
@@ -91,7 +91,7 @@ public final class Injection {
                                    | PackageManager.GET_RECEIVERS
                                    | PackageManager.GET_SERVICES;
 
-    private static Injector applicationInjector(Context childContext) {
+    public static Injector applicationInjector(Context childContext, Module...additionalMod) {
 
         final Context applicationContext = childContext.getApplicationContext();
         final Injector existing = applicationInjectors.get(applicationContext);
@@ -129,6 +129,7 @@ public final class Injection {
 
             final List<Module> modules = new ArrayList<>();
             modules.add(new AndroidModule(applicationContext));
+            modules.addAll(Arrays.asList(additionalMod));
 
             for (final Class<? extends Module> moduleClass: moduleClasses) try {
                 modules.add(moduleClass.newInstance());
