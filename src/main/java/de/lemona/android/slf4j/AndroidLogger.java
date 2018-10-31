@@ -63,6 +63,7 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void trace(final String format, final Object arg1, final Object arg2) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, format(format, arg1, arg2));
     }
 
@@ -111,6 +112,7 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void debug(final String msg, final Throwable t) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, prefix + msg, t);
     }
 
