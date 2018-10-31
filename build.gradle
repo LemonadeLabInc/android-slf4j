@@ -27,16 +27,23 @@ android {
   defaultConfig {
     minSdkVersion 22
     targetSdkVersion 22
-    testInstrumentationRunner 'de.lemona.android.testng.TestNGRunner'
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
 }
 
 // Our dependencies
 dependencies {
   // Require and expose the SLF4J API
-  compile 'org.slf4j:slf4j-api:1.7.+'
+  compile 'org.slf4j:slf4j-api:1.7.25'
   // Use TestNG for Android tests
-  androidTestCompile 'de.lemona.android:android-testng:1.1.+'
+  androidTestCompile 'junit:junit:4.12'
+  androidTestCompile 'org.mockito:mockito-core:2.22.0'
+  androidTestCompile 'org.mockito:mockito-android:2.22.0'
+  androidTestCompile 'com.android.support:support-annotations:25.3.1'
+  androidTestCompile 'com.android.support.test:runner:0.5'
+  androidTestCompile 'com.android.support.test:rules:0.5'
+  androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
+  androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
 }
 
 // Bintray extra configuration
