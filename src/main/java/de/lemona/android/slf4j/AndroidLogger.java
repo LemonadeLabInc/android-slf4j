@@ -51,26 +51,31 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void trace(final String msg) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, prefix + msg);
     }
 
     @Override
     public void trace(final String format, final Object arg1) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, format(format, arg1));
     }
 
     @Override
     public void trace(final String format, final Object arg1, final Object arg2) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, format(format, arg1, arg2));
     }
 
     @Override
     public void trace(final String format, final Object... args) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, format(format, args));
     }
 
     @Override
     public void trace(final String msg, final Throwable t) {
+        if (!isTraceEnabled()) return;
         Log.v(tag, prefix + msg, t);
     }
 
@@ -83,26 +88,31 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void debug(final String msg) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, prefix + msg);
     }
 
     @Override
     public void debug(final String format, final Object arg1) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, format(format, arg1));
     }
 
     @Override
     public void debug(final String format, final Object arg1, final Object arg2) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, format(format, arg1, arg2));
     }
 
     @Override
     public void debug(final String format, final Object... args) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, format(format, args));
     }
 
     @Override
     public void debug(final String msg, final Throwable t) {
+        if (!isDebugEnabled()) return;
         Log.d(tag, prefix + msg, t);
     }
 
@@ -115,26 +125,31 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void info(final String msg) {
+        if (!isInfoEnabled()) return;
         Log.i(tag, prefix + msg);
     }
 
     @Override
     public void info(final String format, final Object arg) {
+        if (!isInfoEnabled()) return;
         Log.i(tag, format(format, arg));
     }
 
     @Override
     public void info(final String format, final Object arg1, final Object arg2) {
+        if (!isInfoEnabled()) return;
         Log.i(tag, format(format, arg1, arg2));
     }
 
     @Override
     public void info(final String format, final Object... args) {
+        if (!isInfoEnabled()) return;
         Log.i(tag, format(format, args));
     }
 
     @Override
     public void info(final String msg, final Throwable t) {
+        if (!isInfoEnabled()) return;
         Log.i(tag, prefix + msg, t);
     }
 
@@ -147,26 +162,31 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void warn(final String msg) {
+        if (!isWarnEnabled()) return;
         Log.w(tag, prefix + msg);
     }
 
     @Override
     public void warn(final String format, final Object arg) {
+        if (!isWarnEnabled()) return;
         Log.w(tag, format(format, arg));
     }
 
     @Override
     public void warn(final String format, final Object arg1, final Object arg2) {
+        if (!isWarnEnabled()) return;
         Log.w(tag, format(format, arg1, arg2));
     }
 
     @Override
     public void warn(final String format, final Object... args) {
+        if (!isWarnEnabled()) return;
         Log.w(tag, format(format, args));
     }
 
     @Override
     public void warn(final String msg, final Throwable t) {
+        if (!isWarnEnabled()) return;
         Log.w(tag, prefix + msg, t);
     }
 
@@ -179,26 +199,31 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     @Override
     public void error(final String msg) {
+        if (!isErrorEnabled()) return;
         Log.e(tag, prefix + msg);
     }
 
     @Override
     public void error(final String format, final Object arg) {
+        if (!isErrorEnabled()) return;
         Log.e(tag, format(format, arg));
     }
 
     @Override
     public void error(final String format, final Object arg1, final Object arg2) {
+        if (!isErrorEnabled()) return;
         Log.e(tag, format(format, arg1, arg2));
     }
 
     @Override
     public void error(final String format, final Object... args) {
+        if (!isErrorEnabled()) return;
         Log.e(tag, format(format, args));
     }
 
     @Override
     public void error(final String msg, final Throwable t) {
+        if (!isErrorEnabled()) return;
         Log.e(tag, prefix + msg, t);
     }
 }
