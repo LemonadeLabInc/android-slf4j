@@ -30,6 +30,13 @@ dependencies {
 }
 ```
 
+Log Level Change
+----------------
+In Android, default log level is `INFO`. To switch `DEBUG` use adb command like below.
+```
+adb shell setprop log.tag.Slf4J DEBUG
+```
+
 
 Notes
 -----
@@ -50,7 +57,6 @@ I/Slf4J   ( 8589):  at ...
 ^C
 $
 ```
-
 
 License
 -------
