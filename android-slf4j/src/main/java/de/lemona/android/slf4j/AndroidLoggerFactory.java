@@ -13,7 +13,7 @@ public class AndroidLoggerFactory implements ILoggerFactory {
     public Logger getLogger(String name) {
         final AndroidLogger existing = loggers.get(name);
         if (existing != null) return existing;
-        final AndroidLogger created = new CrashlyticsLogger(name);
+        final AndroidLogger created = new AndroidLogger(name);
         final AndroidLogger previous = loggers.putIfAbsent(name, created);
         if (previous != null) return previous;
         return created;

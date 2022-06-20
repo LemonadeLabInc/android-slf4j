@@ -1,8 +1,10 @@
-package de.lemona.android.slf4j;
+package de.lemona.android.crashlytics;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
+import de.lemona.android.slf4j.AndroidLogger;
 
 public class CrashlyticsLogger extends AndroidLogger {
     public CrashlyticsLogger(String name) {
