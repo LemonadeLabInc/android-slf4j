@@ -39,7 +39,7 @@ public class LoggingTest {
         spyLogger.trace("This is a 'TRACE' message");
         spyLogger.trace("message {}", "arg1");
         spyLogger.trace("message {} {}", "arg1", "arg2");
-        spyLogger.trace("message {} {}", "arg1", "arg2", "arg3");
+        spyLogger.trace("message {} {} {}", "arg1", "arg2", "arg3");
         spyLogger.trace("message",  new Exception("Hello, world!"));
     }
 
@@ -57,7 +57,7 @@ public class LoggingTest {
         spyLogger.debug("This is a 'DEBUG' message");
         spyLogger.debug("message {}", "arg1");
         spyLogger.debug("message {} {}", "arg1", "arg2");
-        spyLogger.debug("message {} {}", "arg1", "arg2", "arg3");
+        spyLogger.debug("message {} {} {}", "arg1", "arg2", "arg3");
         spyLogger.debug("message",  new Exception("Hello, world!"));
     }
 
@@ -75,7 +75,7 @@ public class LoggingTest {
         spyLogger.info("This is an 'INFO' message");
         spyLogger.info("message {}", "arg1");
         spyLogger.info("message {} {}", "arg1", "arg2");
-        spyLogger.info("message {} {}", "arg1", "arg2", "arg3");
+        spyLogger.info("message {} {} {}", "arg1", "arg2", "arg3");
         spyLogger.info("message",  new Exception("Hello, world!"));
     }
 
@@ -93,7 +93,7 @@ public class LoggingTest {
         spyLogger.warn("This is a 'WARN' message");
         spyLogger.warn("message {}", "arg1");
         spyLogger.warn("message {} {}", "arg1", "arg2");
-        spyLogger.warn("message {} {}", "arg1", "arg2", "arg3");
+        spyLogger.warn("message {} {} {}", "arg1", "arg2", "arg3");
         spyLogger.warn("message",  new Exception("Hello, world!"));
     }
 
@@ -111,7 +111,7 @@ public class LoggingTest {
         spyLogger.error("This is an 'ERROR' message");
         spyLogger.error("message {}", "arg1");
         spyLogger.error("message {} {}", "arg1", "arg2");
-        spyLogger.error("message {} {}", "arg1", "arg2", "arg3");
+        spyLogger.error("message {} {} {}", "arg1", "arg2", "arg3");
         spyLogger.error("message",  new Exception("Hello, world!"));
     }
 
