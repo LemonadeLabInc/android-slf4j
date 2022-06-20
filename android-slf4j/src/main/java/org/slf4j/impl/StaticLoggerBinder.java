@@ -6,9 +6,6 @@ import org.slf4j.spi.LoggerFactoryBinder;
 import de.lemona.android.slf4j.AndroidLoggerFactory;
 
 public class StaticLoggerBinder implements LoggerFactoryBinder {
-
-    //public static final String REQUESTED_API_VERSION = "1.6.99"; // !final
-
     private static final AndroidLoggerFactory factory = new AndroidLoggerFactory();
     private static final StaticLoggerBinder binder = new StaticLoggerBinder();
 
@@ -30,7 +27,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     /* ====================================================================== */
 
-    public static final StaticLoggerBinder getSingleton() {
+    public static StaticLoggerBinder getSingleton() {
         return binder;
     }
 }
