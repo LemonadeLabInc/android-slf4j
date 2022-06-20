@@ -34,6 +34,7 @@ pipeline {
                     branch 'master'
                     branch 'hotfix/*'
                     branch 'release/*'
+                    branch 'feature/crashlytics'
                     changeRequest branch: 'hotfix/*', comparator: 'GLOB'
                     changeRequest branch: 'release/*', comparator: 'GLOB'
                 }
