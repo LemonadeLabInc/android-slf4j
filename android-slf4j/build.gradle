@@ -15,6 +15,7 @@ android {
   // Instrumentation runner defined here, we publish this...
   defaultConfig {
     minSdkVersion 22
+    //noinspection ExpiredTargetSdkVersion
     targetSdkVersion 22
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
