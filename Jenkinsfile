@@ -41,10 +41,7 @@ pipeline {
             }
             steps {
                 leomoAndroidBuild(apiLevel: env.API_LEVEL,  {
-                    sh "./gradlew -PbuildNumber=${env.BUILD_ID} :android-slf4j:uploadS3 -Ps3.accessKey=${env.S3_ACCESS_KEY} -Ps3.secretKey=${env.S3_SECRET_KEY}"
-                })
-                leomoAndroidBuild(apiLevel: env.API_LEVEL,  {
-                    sh "./gradlew -PbuildNumber=${env.BUILD_ID} :crashlytics-slf4j:uploadS3 -Ps3.accessKey=${env.S3_ACCESS_KEY} -Ps3.secretKey=${env.S3_SECRET_KEY}"
+                    sh "./gradlew -PbuildNumber=${env.BUILD_ID} uploadS3 -Ps3.accessKey=${env.S3_ACCESS_KEY} -Ps3.secretKey=${env.S3_SECRET_KEY}"
                 })
                 leomoTag "${env.VERSION}.${env.BUILD_ID}", "Jenkins Build ${env.BUILD_DISPLAY_NAME}\nSee ${env.BUILD_URL}"
             }
