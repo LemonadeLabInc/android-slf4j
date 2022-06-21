@@ -7,8 +7,6 @@ import de.lemona.android.crashlytics.CrashlyticsLoggerFactory;
 
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
-    //public static final String REQUESTED_API_VERSION = "1.6.99"; // !final
-
     private static final CrashlyticsLoggerFactory factory = new CrashlyticsLoggerFactory();
     private static final StaticLoggerBinder binder = new StaticLoggerBinder();
 

@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.lemona.android.slf4j.AndroidLogger;
-
 public class CrashlyticsLoggerFactory implements ILoggerFactory {
 
     private final ConcurrentHashMap<String, CrashlyticsLogger> loggers = new ConcurrentHashMap<>();

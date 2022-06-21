@@ -27,7 +27,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     /* ====================================================================== */
 
-    public static final StaticLoggerBinder getSingleton() {
+    public static StaticLoggerBinder getSingleton() {
         return binder;
     }
 }
