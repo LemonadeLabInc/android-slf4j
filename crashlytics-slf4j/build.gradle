@@ -32,10 +32,9 @@ android {
 }
 
 dependencies {
+    api 'org.slf4j:slf4j-api:1.7.36'
 
-    implementation project(path: ':android-slf4j')
     implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
-    implementation 'androidx.annotation:annotation:1.4.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

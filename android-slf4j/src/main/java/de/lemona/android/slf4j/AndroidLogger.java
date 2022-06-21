@@ -30,15 +30,15 @@ public class AndroidLogger extends MarkerIgnoringBase {
 
     /* ====================================================================== */
 
-    protected String format(final String format, final Object arg1) {
+    private String format(final String format, final Object arg1) {
         return this.prefix + MessageFormatter.format(format, arg1).getMessage();
     }
 
-    protected String format(final String format, final Object arg1, final Object arg2) {
+    private String format(final String format, final Object arg1, final Object arg2) {
         return this.prefix + MessageFormatter.format(format, arg1, arg2).getMessage();
     }
 
-    protected String format(final String format, final Object[] args) {
+    private String format(final String format, final Object[] args) {
         return this.prefix + MessageFormatter.arrayFormat(format, args).getMessage();
     }
 
