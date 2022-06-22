@@ -4,7 +4,7 @@ A simple implementation of [Slf4J API](http://www.slf4j.org/)
 using the Android [LogCat](http://developer.android.com/reference/android/util/Log.html)
 and [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics).
 
-Sending log events to Crashlytics when calling `Logger#warn()` or `Logger#error()`
+Sends log events to Crashlytics when calling `Logger#warn()` or `Logger#error()`
 
 ## Usage
 
