@@ -1,1 +1,3 @@
-rootProject.name = 'android-slf4j'
+rootProject.name = 'android-logging'
+include ':android-slf4j'
+include ':crashlytics-slf4j'

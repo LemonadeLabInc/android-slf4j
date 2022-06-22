@@ -2,5 +2,6 @@
 build
 local.properties
 project.properties
+lemonade.properties
 
 *.iml
