@@ -15,7 +15,7 @@ dependencies {
 }
 ```
 
-And [set up Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started?platform=android) on your app
+And [set up Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started?platform=android) for your app.
 
 ## Log Level Change
 
